@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package Funcbench;
+
+service FaaSFunc {
+  rpc InvokeFunc (InvokeRequest) returns (InvokeReply) {}
+}
+
+message InvokeRequest {
+  string name = 1;
+}
+
+message InvokeReply {
+  string message = 1;
+}

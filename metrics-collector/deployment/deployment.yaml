@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrics-collector
+spec:
+  selector:
+    matchLabels:
+      run: metrics-collector
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: metrics-collector
+    spec:
+      containers:
+        - name: metrics-collector
+          image: thandayuthapani/metrics-collector:latest
+          command: [ "./metrics-collector" ]
+          args: [ "-username=$USERNAME", "-password=$PASSWORD", "-source=carbonSDK" ]
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: docker-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metrics-collector
+  labels:
+    run: metrics-collector
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+  selector:
+    run: metrics-collector
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: carbon-sdk
+spec:
+  selector:
+    matchLabels:
+      run: carbon-sdk
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: carbon-sdk
+    spec:
+      containers:
+        - name: carbon-sdk
+          image: thandayuthapani/carbon-sdk:latest
+          env:
+            - name: CarbonAwareVars__CarbonIntensityDataSource
+              value: WattTime
+            - name: WattTimeClient__Username
+              value: $USERNAME
+            - name: WattTimeClient__Password
+              value: $PASSWORD
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: docker-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: carbon-sdk
+  labels:
+    run: carbon-sdk
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+  selector:
+    run: carbon-sdk

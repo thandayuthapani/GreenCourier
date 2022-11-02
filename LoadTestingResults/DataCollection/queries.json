@@ -1,0 +1,267 @@
+{ 
+  "irate_normalization_time": "1m",
+  "step": 5,
+  "queries_kubernetes_platform": {
+    "per_node": {
+      "cpu": {
+        "system": {
+          "query_prefix": "avg(irate(node_cpu_seconds_total{instance=~%22",
+          "query_postfix": "%22,mode=%22system%22}[",
+          "query_further_postfix": "]))*100",
+          "unit": "percent"
+        },
+        "user": {
+          "query_prefix": "avg(irate(node_cpu_seconds_total{instance=~%22",
+          "query_postfix": "%22,mode=%22user%22}[",
+          "query_further_postfix": "]))*100",
+          "unit": "percent"
+        },
+        "iowait": {
+          "query_prefix": "avg(irate(node_cpu_seconds_total{instance=~%22",
+          "query_postfix": "%22,mode=%22iowait%22}[",
+          "query_further_postfix": "]))*100",
+          "unit": "percent"
+        },
+        "idle": {
+          "query_prefix": "avg(irate(node_cpu_seconds_total{instance=~%22",
+          "query_postfix": "%22,mode=%22idle%22}[",
+          "query_further_postfix": "]))*100",
+          "unit": "percent"
+        }
+      },
+      "mem": {
+        "total": {
+          "query_prefix": "node_memory_MemTotal_bytes{instance=~%22",
+          "query_postfix": "%22}",
+          "query_further_postfix": "",
+          "unit": "bytes"
+        },
+        "used": {
+          "query_prefix": "node_memory_MemTotal_bytes{instance=~%22",
+          "query_postfix": "%22} - node_memory_MemAvailable_bytes{instance=~%22",
+          "query_further_postfix": "%22}",
+          "unit": "bytes"
+        },
+        "available": {
+          "query_prefix": "node_memory_MemAvailable_bytes{instance=~%22",
+          "query_postfix": "%22}",
+          "query_further_postfix": "",
+          "unit": "bytes"
+        },
+        "used_percent": {
+          "query_prefix": "(1 - (node_memory_MemAvailable_bytes{instance=~%22",
+          "query_postfix": "%22} / (node_memory_MemTotal_bytes{instance=~%22",
+          "query_further_postfix": "%22})))* 100",
+          "unit": "percent"
+        }
+      },
+      "io": {
+        "time_doing_io_percent": {
+          "query_prefix": "irate(node_disk_io_time_seconds_total{instance=~%22",
+          "query_postfix": "%22}[",
+          "query_further_postfix": "])",
+          "unit": "percent"
+        },
+        "disk_reads_iops": {
+          "query_prefix": "irate(node_disk_reads_completed_total{instance=~%22",
+          "query_postfix": "%22}[",
+          "query_further_postfix": "])",
+          "unit": "iops"
+        },
+        "disk_writes_iops": {
+          "query_prefix": "irate(node_disk_writes_completed_total{instance=~%22",
+          "query_postfix": "%22}[",
+          "query_further_postfix": "])",
+          "unit": "iops"
+        },
+        "disk_reads_bytes": {
+          "query_prefix": "irate(node_disk_read_bytes_total{instance=~%22",
+          "query_postfix": "%22}[",
+          "query_further_postfix": "])",
+          "unit": "bytes"
+        },
+        "disk_writes_bytes": {
+          "query_prefix": "irate(node_disk_written_bytes_total{instance=~%22",
+          "query_postfix": "%22}[",
+          "query_further_postfix": "])",
+          "unit": "bytes"
+        },
+        "context_switches": {
+          "query_prefix": "irate(node_context_switches_total{instance=~%22",
+          "query_postfix": "%22}[",
+          "query_further_postfix": "])",
+          "unit": ""
+        }
+      }
+    },
+    "per_function": {
+      "cpu": {
+        "name": "cpu_avg_over_replicas",
+        "query_prefix": "sum(irate(container_cpu_usage_seconds_total{pod=~%22.*",
+        "query_postfix": ".*%22}[",
+          "query_further_postfix": "]))",
+        "step": 15,
+        "formatter": "",
+        "percent": 50
+      },
+      "mem": {
+        "name": "mem_avg_over_replicas",
+        "query_prefix": "sum(container_memory_working_set_bytes{container!=%22%22, pod=~%22.*",
+        "query_postfix": ".*%22})",
+        "query_further_postfix": "",
+        "step": 15,
+        "formatter": 2147483648,
+        "percent": 14.28
+      },
+      "replicas": {
+        "name": "replicas",
+        "query_prefix": "count(kube_pod_info{pod=~%22.*",
+        "query_postfix": ".*%22})",
+        "query_further_postfix": "",
+        "step": 15,
+        "formatter": "",
+        "percent": ""
+      },
+      "file_descriptors": {
+        "name": "file_descriptors",
+        "query_prefix": "sum(container_file_descriptors{pod=~%22.*",
+        "query_postfix": ".*%22})",
+        "query_further_postfix": "",
+        "step": 15,
+        "formatter": "",
+        "percent": ""
+      }
+    }
+  },
+  "queries_k6_load_test_http": {
+      "responsetime_max": {
+        "name": "http_req_duration",
+        "query_prefix": "SELECT max(\"value\") FROM \"http_req_duration\" WHERE time >= ",
+        "query_postfix": "s and time <= ",
+        "query_further_postfix": "s and value > 0 GROUP BY time(10s) fill(0)",
+        "step": 15,
+        "formatter": "",
+        "percent": 1.66
+      },
+      "responsetime_min": {
+        "name": "http_req_duration",
+        "query_prefix": "SELECT min(\"value\") FROM \"http_req_duration\" WHERE time >= ",
+        "query_postfix": "s and time <= ",
+        "query_further_postfix": "s and value > 0 GROUP BY time(10s) fill(0)",
+        "step": 15,
+        "formatter": "",
+        "percent": 1.66
+      },
+      "responsetime_p95": {
+        "name": "http_req_duration",
+        "query_prefix": "SELECT percentile(\"value\", 95) FROM \"http_req_duration\" WHERE time >= ",
+        "query_postfix": "s and time <= ",
+        "query_further_postfix": "s and value > 0 GROUP BY time(10s) fill(0)",
+        "step": 15,
+        "formatter": "",
+        "percent": 1.66
+      },
+      "responsetime_p90": {
+        "name": "http_req_duration",
+        "query_prefix": "SELECT percentile(\"value\", 90) FROM \"http_req_duration\" WHERE time >= ",
+        "query_postfix": "s and time <= ",
+        "query_further_postfix": "s and value > 0 GROUP BY time(10s) fill(0)",
+        "step": 15,
+        "formatter": "",
+        "percent": 1.66
+      },
+      "number_of_requests_sent": {
+        "name": "http_reqs",
+        "query_prefix": "SELECT sum(\"value\") FROM \"http_reqs\" WHERE time >= ",
+        "query_postfix": "s and time <= ",
+        "query_further_postfix": "s GROUP BY time(10s) fill(0)",
+        "step": 15,
+        "formatter": "",
+        "percent": 1.66
+      },
+      "requests_per_second" : {
+        "name": "http_reqs",
+        "query_prefix": "SELECT sum(\"value\") FROM \"http_reqs\" WHERE time >= ",
+        "query_postfix": "s and time <= ",
+        "query_further_postfix": "s fill(0)",
+        "step": 15,
+        "formatter": "",
+        "percent": 1.66
+      }
+  },
+  "queries_k6_load_test_gRPC": {
+    "responsetime_max": {
+      "name": "grpc_req_duration",
+      "query_prefix": "SELECT max(\"value\") FROM \"grpc_req_duration\" WHERE time >= ",
+      "query_postfix": "s and time <= ",
+      "query_further_postfix": "s and value > 0 GROUP BY time(10s) fill(0)",
+      "step": 15,
+      "formatter": "",
+      "percent": 1.66
+    },
+    "responsetime_min": {
+      "name": "grpc_req_duration",
+      "query_prefix": "SELECT min(\"value\") FROM \"grpc_req_duration\" WHERE time >= ",
+      "query_postfix": "s and time <= ",
+      "query_further_postfix": "s and value > 0 GROUP BY time(10s) fill(0)",
+      "step": 15,
+      "formatter": "",
+      "percent": 1.66
+    },
+    "responsetime_p95": {
+      "name": "grpc_req_duration",
+      "query_prefix": "SELECT percentile(\"value\", 95) FROM \"grpc_req_duration\" WHERE time >= ",
+      "query_postfix": "s and time <= ",
+      "query_further_postfix": "s and value > 0 GROUP BY time(10s) fill(0)",
+      "step": 15,
+      "formatter": "",
+      "percent": 1.66
+    },
+    "responsetime_p90": {
+      "name": "grpc_req_duration",
+      "query_prefix": "SELECT percentile(\"value\", 90) FROM \"grpc_req_duration\" WHERE time >= ",
+      "query_postfix": "s and time <= ",
+      "query_further_postfix": "s and value > 0 GROUP BY time(10s) fill(0)",
+      "step": 15,
+      "formatter": "",
+      "percent": 1.66
+    }
+  },
+  "queries_k6_load_test_generic": {
+    "number_vus": {
+      "name": "vus",
+      "query_prefix": "SELECT mean(\"value\") FROM \"vus\" WHERE time >= ",
+      "query_postfix": "s and time <= ",
+      "query_further_postfix": "s GROUP BY time(10s) fill(0)",
+      "step": 15,
+      "formatter": "",
+      "percent": 1.66
+    }
+  },
+  "queries_knative":{
+    "function_response_time_p95": {
+      "query_prefix": "histogram_quantile(0.95, sum(rate(activator_request_latencies_bucket{response_code=%22200%22,service_name=~%22",
+      "query_postfix": "%22}[",
+      "query_further_postfix": "]))%20by%20(le%2Cservice_name))",
+      "unit": ""
+    },
+    "function_response_time_p99": {
+      "query_prefix": "histogram_quantile(0.99, sum(rate(activator_request_latencies_bucket{response_code=%22200%22,service_name=~%22",
+      "query_postfix": "%22}[",
+      "query_further_postfix": "]))%20by%20(le%2Cservice_name))",
+      "unit": ""
+    },
+    "function_response_time_p50": {
+      "query_prefix": "histogram_quantile(0.50, sum(rate(activator_request_latencies_bucket{response_code=%22200%22,service_name=~%22",
+      "query_postfix": "%22}[",
+      "query_further_postfix": "]))%20by%20(le%2Cservice_name))",
+      "unit": ""
+    },
+    "number_of_function_requests": {
+      "query_prefix": "sum(increase(activator_request_count{response_code=%22200%22,service_name=~%22",
+      "query_postfix": "%22}[",
+      "query_further_postfix": "]))",
+      "unit": ""
+    } 
+  }
+}

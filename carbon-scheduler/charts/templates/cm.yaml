@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: carbon-scheduler-configmap
+  namespace: kube-system
+data:
+  carbon-scheduler-config: |
+    apiVersion: kubescheduler.config.k8s.io/v1beta3
+    kind: KubeSchedulerConfiguration
+    profiles:
+      - schedulerName: kube-carbon-scheduler
+        plugins:
+          score:
+            disabled:
+              - name: SelectorSpread
+              - name: ImageLocality
+              - name: TaintToleration
+              - name: NodeAffinity
+              - name: PodTopologySpread
+              - name: NodeResourcesFit
+              - name: NodeResourcesBalancedAllocation
+              - name: VolumeBinding
+              - name: InterPodAffinity
+            enabled:
+              - name: CarbonScore
+                weight: 5
+    leaderElection:
+      leaderElect: false

@@ -1,0 +1,19 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: funcbench-float-runc
+  namespace: default
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/class: "kpa.autoscaling.knative.dev"
+        autoscaling.knative.dev/scale-to-zero-pod-retention-period: "5m"
+        autoscaling.knative.dev/metric: "concurrency"
+        autoscaling.knative.dev/target: "1"
+    spec:
+      containers:
+        - image: docker.io/kkyfury/funcbench-float:v2
+          ports:
+          - name: h2c
+            containerPort: 50051

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: carbon-scheduler
+version: 0.1.0
+description: Carbon-aware scheduler for kubernetes
+type: application
+appVersion: 0.1.0

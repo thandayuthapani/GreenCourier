@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    component: scheduler
+  name: kube-carbon-scheduler
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      component: scheduler
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        component: scheduler
+    spec:
+      serviceAccountName: kube-carbon-scheduler
+      containers:
+        - args:
+            - --config=/etc/carbon-sched/carbon-scheduler-config
+            - --v=10
+          image: thandayuthapani/kube-carbon-scheduler
+          name: kube-carbon-scheduler
+          volumeMounts:
+            - name: config
+              mountPath: /etc/carbon-sched
+      hostNetwork: false
+      hostPID: false
+      volumes:
+        - name: config
+          configMap:
+            name: carbon-scheduler-configmap

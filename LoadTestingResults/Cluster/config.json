@@ -1,0 +1,6 @@
+{
+    "influx-db-ip": "138.246.237.18",
+    "influx-dp-port": "8086",
+    "filename": "output.log",
+    "dbname": "myk6db"
+}

@@ -1,0 +1,20 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: funcbench-cnnserving-runc
+  namespace: liqo-demo
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/class: "kpa.autoscaling.knative.dev"
+        autoscaling.knative.dev/scale-to-zero-pod-retention-period: "2m"
+        autoscaling.knative.dev/metric: "concurrency"
+        autoscaling.knative.dev/target: "1"
+    spec:
+      schedulerName: kube-carbon-scheduler
+      containers:
+        - image: docker.io/kkyfury/funcbench-cnnserving:v2
+          ports:
+          - name: h2c
+            containerPort: 50051
