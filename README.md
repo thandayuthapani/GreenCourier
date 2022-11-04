@@ -7,7 +7,7 @@ GreenCourier has production-ready tech stack and one-click away from integrating
 with existing geographically distributed clusters with Liqo.  
 ## System Architecture  
 
-![System Architecture](/Images/system-architecture.jpg "GreenCourier Architecture")  
+![System Architecture](/Images/system-architecture.png "GreenCourier Architecture")  
 
 ## Installation
 We need a cluster with Knative enabled in management cluster and target clusters which are
