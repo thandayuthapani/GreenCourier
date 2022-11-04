@@ -77,6 +77,13 @@ $$
 GreenCourier is built using [Kubernetes Scheduling Framework](https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/).
 It is possible to extend GreenCourier just as extending [Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/) for which there are numerous 
 publicly available documentation.  
+
+## References
+1. [Immersion cooling heats up - Greengard, Samuel](https://dl.acm.org/doi/abs/10.1145/3530688)
+2. [Serverless in the Wild: Characterizing and Optimizing the Serverless Workload at a Large Cloud Provider](https://www.usenix.org/conference/atc20/presentation/shahrad)
+3. [How much energy do data centers use?](https://davidmytton.blog/how-much-energy-do-data-centers-use/)
+4. [Global Serverless Architecture Market To Reach USD 86.94 Billion By 2030](https://www.reportsanddata.com/press-release/global-serverless-architecture-market)
+
 ## Contact
 Thandayuthapani Subramanian [:e-mail:](thandayuthapani.subramanian@tum.de) [![Linkedin](https://i.stack.imgur.com/gVE0j.png)](https://www.linkedin.com/in/thandayuthapani/) [![GitHub](https://i.stack.imgur.com/tskMh.png)](https://github.com/thandayuthapani)  
 Mohak Chadha [:e-mail:](mohak.chadha@tum.de)[![Linkedin](https://i.stack.imgur.com/gVE0j.png)](https://www.linkedin.com/in/mohak-chadha-1490707b) [![GitHub](https://i.stack.imgur.com/tskMh.png)](https://github.com/kky-fury)
