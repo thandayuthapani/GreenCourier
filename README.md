@@ -61,12 +61,14 @@ And the result of the evaluation is show as following:
 
 It is very much evident that our proposed solution does impact scheduling decisions, tremendously reducing carbon
 footprint for function execution.  We calculate efficiency value for function placement by following formula:
+
 $$
 Placement Efficiency = \frac{number\ of\ function\ instances\ deployed\ in\ possible\ carbon\ efficient\ region}{total\ number\ of\ function\ instances\ executed}
 $$
 
 Similarly, Carbon efficiency was calculated by taking weighted average of carbon score divided by best possible
 result for execution.
+
 $$
 Carbon Efficiency = \frac{\Sigma number\ of\ function\ instances\ deployed\ in\ a\ region \times Carbon\ score\ of\ that\ region}{Best\ possible\ score\ for\ the\ given\ workload}
 $$
