@@ -1,15 +1,18 @@
-# GreenCourier
-![GreenCourier](/Images/GreenCourier-Name.png "GreenCourier")
+![GreenCourier](/Images/GreenCourier-Name.png "GreenCourier")  
+
 GreenCourier is a carbon-aware Kubernetes plugin to intelligently schedule
 serverless functions in regions of low carbon emission using [Carbon-Aware-SDK](https://github.com/Green-Software-Foundation/carbon-aware-sdk).
 GreenCourier optimises delivery of serverless functions across geo-spatial multi-cluster Kubernetes environment in the cloud for carbon efficiency.
 GreenCourier has production-ready tech stack and one-click away from integrating
-with existing geographically distributed clusters with Liqo.
+with existing geographically distributed clusters with Liqo.  
+## System Architecture  
+
 ![System Architecture](/Images/system-architecture.jpg "GreenCourier Architecture")  
 
 ## Installation
 We need a cluster with Knative enabled in management cluster and target clusters which are
 geographically distributed to be connected to management cluster using [Liqo](https://github.com/liqotech/liqo).  
+
 Once the cluster setup up is done, it is important for us to install metrics-collector and Carbon-Aware-SDK's WebAPI in local cluster.
 
 ```
@@ -52,7 +55,8 @@ spec:
 ```
 ## Evaluation
 As shown in the system architecture, we deployed 3 clusters in different regions and load tested our solution.
-And the result of the evaluation is show as following:
+And the result of the evaluation is show as following:  
+
 ![EvalResult](/Images/Evaluation-Result.jpg "Evaluation Result")
 
 It is very much evident that our proposed solution does impact scheduling decisions, tremendously reducing carbon
@@ -70,4 +74,7 @@ $$
 ## Extending GreenCourier
 GreenCourier is built using [Kubernetes Scheduling Framework](https://kubernetes.io/docs/concepts/scheduling-eviction/scheduling-framework/).
 It is possible to extend GreenCourier just as extending [Kubernetes Scheduler](https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/) for which there are numerous 
-publicly available documentation.
+publicly available documentation.  
+## Contact
+Thandayuthapani Subramanian [:e-mail:](thandayuthapani.subramanian@tum.de) [![Linkedin](https://i.stack.imgur.com/gVE0j.png)](https://www.linkedin.com/in/thandayuthapani/) [![GitHub](https://i.stack.imgur.com/tskMh.png)](https://github.com/thandayuthapani)  
+Mohak Chadha [:e-mail:](mohak.chadha@tum.de)[![Linkedin](https://i.stack.imgur.com/gVE0j.png)](https://www.linkedin.com/in/mohak-chadha-1490707b) [![GitHub](https://i.stack.imgur.com/tskMh.png)](https://github.com/kky-fury)
